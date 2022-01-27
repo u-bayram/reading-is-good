@@ -34,7 +34,7 @@ public class CustomerController {
     }
 
     @PostMapping("/newCustomer")
-    public ResponseEntity newCustomer(@RequestBody @Validated NewCustomerRequestDto newCustomerRequestDto) {
+    public ResponseEntity<NewCustomerResponseDto> newCustomer(@RequestBody @Validated NewCustomerRequestDto newCustomerRequestDto) {
         log.info("newCustomer request.");
         return new ResponseEntity<NewCustomerResponseDto>(customerService.newCustomer(newCustomerRequestDto), HttpStatus.CREATED);
     }
