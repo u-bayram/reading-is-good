@@ -1,15 +1,17 @@
 package com.getir.readingisgood.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 /**
  * @author UmutBayram
  */
+@Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerOrdersResponseDto {
     private List<OrderInfoResponseDto> orders;
     private Integer page;

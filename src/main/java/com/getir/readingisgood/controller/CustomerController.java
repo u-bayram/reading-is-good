@@ -40,7 +40,7 @@ public class CustomerController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity orders(@RequestBody @Validated CustomerOrdersRequestDto customerOrdersRequestDto) {
+    public ResponseEntity<CustomerOrdersResponseDto> orders(@RequestBody @Validated CustomerOrdersRequestDto customerOrdersRequestDto) {
         log.info("customer orders request.");
         return new ResponseEntity<CustomerOrdersResponseDto>(orderService.orders(customerOrdersRequestDto), HttpStatus.CREATED);
     }

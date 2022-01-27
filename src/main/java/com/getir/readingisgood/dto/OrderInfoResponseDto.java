@@ -1,8 +1,7 @@
 package com.getir.readingisgood.dto;
 
 import com.getir.readingisgood.model.OrderDetail;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.List;
 /**
  * @author UmutBayram
  */
+@Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderInfoResponseDto {
 
     private String id;

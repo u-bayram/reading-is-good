@@ -1,5 +1,6 @@
 package com.getir.readingisgood.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.NumberFormat;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 /**
  * @author UmutBayram
  */
+@Builder
 @Getter
 @Setter
 public class OrderFilterRequestDto {
