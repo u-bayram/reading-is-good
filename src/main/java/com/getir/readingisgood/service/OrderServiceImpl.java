@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 
     private List<Book> stockControlAndDecrease(List<NewOrderBookRequestDto> newOrderBookRequestDtos, List<OrderDetail> orderDetails) {
         List<Book> newStockWithBooks = new ArrayList<Book>();
-        List<Book> books = orderRepository.findByOrderDetailsBookCodeIn(newOrderBookRequestDtos.stream().map(newOrderBookRequestDto -> newOrderBookRequestDto.getBookCode()).collect(Collectors.toList()));
+        List<Book> books = bookRepository.findByCodeIn(newOrderBookRequestDtos.stream().map(newOrderBookRequestDto -> newOrderBookRequestDto.getBookCode()).collect(Collectors.toList()));
         newOrderBookRequestDtos.forEach(newOrderBookRequestDto -> {
             Book book = books.stream().filter(tempBook -> tempBook.getCode().equals(newOrderBookRequestDto.getBookCode()))
                     .findFirst().orElseThrow(() -> new NotFoundException(ExceptionTypeEnum.NOT_FOUND_EXCEPTION.getCode(), "Data not found : " + newOrderBookRequestDto.getBookCode()));

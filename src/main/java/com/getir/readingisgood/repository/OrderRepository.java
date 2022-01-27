@@ -17,5 +17,4 @@ public interface OrderRepository extends MongoRepository<Order, String> {
 
     Page<Order> findByEmailAndDateGreaterThanEqualAndDateLessThanEqual(String email, LocalDate startDate, LocalDate finishDate, Pageable pageable);
 
-    List<Book> findByOrderDetailsBookCodeIn(List<String> bookCodes);
 }
