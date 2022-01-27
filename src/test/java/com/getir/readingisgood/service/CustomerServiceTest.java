@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 /**
  * @author UmutBayram
@@ -54,8 +55,8 @@ class CustomerServiceTest {
 
     @Test
     void testNewCustomer() {
-        Mockito.when(passwordEncoder.encode(null)).thenReturn("passwordEncoded");
-        Mockito.when(customerRepository.insert(any(Customer.class))).thenReturn(customer);
+        when(passwordEncoder.encode(null)).thenReturn("passwordEncoded");
+        when(customerRepository.insert(any(Customer.class))).thenReturn(customer);
         NewCustomerResponseDto newCustomerResponseDto = customerService.newCustomer(newCustomerRequestDto);
 
         assertNotNull(newCustomerResponseDto);
@@ -64,7 +65,7 @@ class CustomerServiceTest {
 
     @Test
     void testLoadUserByUsername() {
-        Mockito.when(customerRepository.findByEmail(anyString())).thenReturn(Optional.ofNullable(customer));
+        when(customerRepository.findByEmail(anyString())).thenReturn(Optional.ofNullable(customer));
         User user = (User) customerService.loadUserByUsername("test@test.com");
         assertNotNull(user);
         assertEquals(user.getUsername(), customer.getEmail());

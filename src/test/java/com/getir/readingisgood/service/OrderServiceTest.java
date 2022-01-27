@@ -6,11 +6,11 @@ import com.getir.readingisgood.model.Order;
 import com.getir.readingisgood.model.OrderDetail;
 import com.getir.readingisgood.repository.BookRepository;
 import com.getir.readingisgood.repository.OrderRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 /**
  * @author UmutBayram
@@ -101,16 +102,17 @@ class OrderServiceTest {
 
     @Test
     void testNewOrder() {
-        Mockito.when(bookRepository.saveAll(any(ArrayList.class))).thenReturn(orders);
-        Mockito.when(orderRepository.insert(any(Order.class))).thenReturn(order);
-        Mockito.when(bookRepository.findByCodeIn(any(ArrayList.class))).thenReturn(books);
+        when(bookRepository.saveAll(any(ArrayList.class))).thenReturn(orders);
+        when(orderRepository.insert(any(Order.class))).thenReturn(order);
+        when(bookRepository.findByCodeIn(any(ArrayList.class))).thenReturn(books);
 
         OrderInfoResponseDto orderInfoResponseDto = orderService.newOrder(newOrderRequestDto);
+        Assertions.assertNotNull(orderInfoResponseDto);
     }
 
     @Test
     void testOrderInfoById() {
-        Mockito.when(orderRepository.findById(anyString())).thenReturn(Optional.of(order));
+        when(orderRepository.findById(anyString())).thenReturn(Optional.of(order));
         OrderInfoResponseDto orderInfoResponseDto = orderService.orderInfoById("orderId");
         assertNotNull(orderInfoResponseDto);
         assertEquals(orderInfoResponseDto.getEmail(), order.getEmail());
@@ -118,11 +120,11 @@ class OrderServiceTest {
 
     @Test
     void testFilter() {
-        Mockito.when(orderRepository.findById(anyString())).thenReturn(Optional.of(order));
+        when(orderRepository.findById(anyString())).thenReturn(Optional.of(order));
 
         Page orderPage = new PageImpl(orders);
 
-        Mockito.when(orderRepository.findByEmailAndDateBetween(
+        when(orderRepository.findByEmailAndDateBetween(
                 anyString(),
                 any(LocalDate.class),
                 any(LocalDate.class),
@@ -135,7 +137,7 @@ class OrderServiceTest {
 
     @Test
     void testMonthlyStatistics() {
-        Mockito.when(orderRepository.findByEmailAndDateBetween(
+        when(orderRepository.findByEmailAndDateBetween(
                 anyString(),
                 any(LocalDate.class),
                 any(LocalDate.class))).thenReturn(orders);
@@ -147,7 +149,7 @@ class OrderServiceTest {
     @Test
     void testOrders() {
         Page orderPage = new PageImpl(orders);
-        Mockito.when(orderRepository.findByEmail(anyString(), any(Pageable.class))).thenReturn(orderPage);
+        when(orderRepository.findByEmail(anyString(), any(Pageable.class))).thenReturn(orderPage);
         CustomerOrdersResponseDto customerOrdersResponseDto = orderService.orders(customerOrdersRequestDto);
         assertNotNull(customerOrdersResponseDto);
         assertEquals(customerOrdersResponseDto.getSize(), 1);

@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  db:
+    image: 'mongo:latest'
+    container_name: db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - MONGO_INITDB_DATABASE=readingisgood
+    ports:
+      - "27017:27017"
+    networks:
+      - host
+  app:
+    image: 'readingisgood:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    external_links:
+      - db:db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      - MONGO_INITDB_DATABASE=readingisgood
+    ports:
+      - "8080:8080"
+    networks:
+      - host
+networks:
+  host:
