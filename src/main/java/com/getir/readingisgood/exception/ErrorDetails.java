@@ -11,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ErrorDetails {
     private Date timestamp;
+    private String errorCode;
     private String message;
     private String details;
 

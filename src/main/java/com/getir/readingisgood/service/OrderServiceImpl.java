@@ -16,15 +16,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.TextStyle;
+import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author UmutBayram
+ */
 @Service
 public class OrderServiceImpl implements OrderService {
-
 
     private final OrderRepository orderRepository;
     private final BookRepository bookRepository;
@@ -74,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderFilterResponseDto filter(OrderFilterRequestDto orderFilterRequestDto) {
-        Page<Order> orders = orderRepository.findByEmailAndDateGreaterThanEqualAndDateLessThanEqual(
+        Page<Order> orders = orderRepository.findByEmailAndDateBetween(
                 orderFilterRequestDto.getEmail(),
                 orderFilterRequestDto.getStartDate(),
                 orderFilterRequestDto.getFinishDate(),
@@ -91,7 +94,49 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public MonthlyStatisticsResponseDto monthlyStatistics(MonthlyStatisticsRequestDto monthlyStatisticsRequestDto) {
 
-        return null;
+        Integer year = LocalDate.now().getYear();
+
+        List<Order> orders = orderRepository.findByEmailAndDateBetween(monthlyStatisticsRequestDto.getEmail(),
+                LocalDate.of(year, 1, 1),
+                LocalDate.of(year, 12, 31));
+
+
+        List<MonthlyStatisticsDetailsResponseDto> monthlyStatisticsDetailsResponseDtos = generateMonthlyStatisticsDetailsResponseDtos(orders);
+        MonthlyStatisticsResponseDto monthlyStatisticsResponseDto =
+                MonthlyStatisticsResponseDto.builder()
+                        .reports(monthlyStatisticsDetailsResponseDtos.stream().sorted(Comparator.comparing(MonthlyStatisticsDetailsResponseDto::getMonthNumber))
+                                .collect(Collectors.toList())).build();
+
+        return monthlyStatisticsResponseDto;
+    }
+
+    private List<MonthlyStatisticsDetailsResponseDto> generateMonthlyStatisticsDetailsResponseDtos(List<Order> orders) {
+        List<MonthlyStatisticsDetailsResponseDto> monthlyStatisticsDetailsResponseDtos = new ArrayList<MonthlyStatisticsDetailsResponseDto>();
+        orders.stream().forEach(order -> {
+            LocalDateTime orderDate = order.getDate();
+            MonthlyStatisticsDetailsResponseDto monthlyStatisticsDetailsResponseDto = monthlyStatisticsDetailsResponseDtos
+                    .stream()
+                    .filter(monthlyStatisticsDetailsResponseDtoTemp -> monthlyStatisticsDetailsResponseDtoTemp.getMonthNumber().equals(orderDate.getMonth().getValue()))
+                    .findFirst()
+                    .orElse(
+                            MonthlyStatisticsDetailsResponseDto.builder()
+                                    .month(orderDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US))
+                                    .monthNumber(orderDate.getMonth().getValue())
+                                    .totalPrice(new BigDecimal(0))
+                                    .bookCount(0L)
+                                    .orderCount(0L)
+                                    .build());
+            monthlyStatisticsDetailsResponseDto.setOrderCount(monthlyStatisticsDetailsResponseDto.getOrderCount() + 1);
+
+            order.getOrderDetails().stream().forEach(orderDetail -> {
+                monthlyStatisticsDetailsResponseDto.setBookCount(monthlyStatisticsDetailsResponseDto.getBookCount() + orderDetail.getCount());
+                monthlyStatisticsDetailsResponseDto.setTotalPrice(orderDetail.getPrice().multiply(BigDecimal.valueOf(orderDetail.getCount())).add(monthlyStatisticsDetailsResponseDto.getTotalPrice()));
+            });
+            if (!monthlyStatisticsDetailsResponseDtos.contains(monthlyStatisticsDetailsResponseDto)) {
+                monthlyStatisticsDetailsResponseDtos.add(monthlyStatisticsDetailsResponseDto);
+            }
+        });
+        return monthlyStatisticsDetailsResponseDtos;
     }
 
     @Override

@@ -7,16 +7,21 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+/**
+ * @author UmutBayram
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginRequestDto implements Serializable {
     @Email
-    @NotBlank
+    @NotEmpty
     private String email;
     @NotBlank
+    @NotEmpty
     private String password;
 }

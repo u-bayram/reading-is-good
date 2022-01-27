@@ -5,6 +5,7 @@ import com.getir.readingisgood.dto.NewBookResponseDto;
 import com.getir.readingisgood.dto.UpdateBookRequestDto;
 import com.getir.readingisgood.dto.UpdateBookResponseDto;
 import com.getir.readingisgood.service.BookService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 /**
  * @author UmutBayram
  */
+@Log4j2
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -31,11 +33,13 @@ public class BookController {
 
     @PostMapping("/newBook")
     public ResponseEntity<NewBookResponseDto> newBook(@RequestBody @Valid NewBookRequestDto newBookRequestDto) {
+        log.info("newBook request.");
         return new ResponseEntity<NewBookResponseDto>(bookService.newBook(newBookRequestDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<UpdateBookResponseDto> newBook(@RequestBody @Valid UpdateBookRequestDto updateBookRequestDto) {
+    public ResponseEntity<UpdateBookResponseDto> updateBook(@RequestBody @Valid UpdateBookRequestDto updateBookRequestDto) {
+        log.info("updateBook request.");
         return new ResponseEntity<UpdateBookResponseDto>(bookService.updateBookStockAndPrice(updateBookRequestDto), HttpStatus.CREATED);
     }
 

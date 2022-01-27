@@ -4,6 +4,7 @@ import com.getir.readingisgood.configuration.JwtTokenUtil;
 import com.getir.readingisgood.dto.LoginRequestDto;
 import com.getir.readingisgood.dto.LoginResponseDto;
 import com.getir.readingisgood.service.CustomerServiceImpl;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.Objects;
 
+/**
+ * @author UmutBayram
+ */
+@Log4j2
 @RestController
 public class LoginController {
 
@@ -34,7 +39,8 @@ public class LoginController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<LoginResponseDto> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) throws Exception {
+    public ResponseEntity<LoginResponseDto> authenticate(@Valid @RequestBody LoginRequestDto loginRequestDto) throws Exception {
+        log.info("authenticate request.");
         authenticate(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         final UserDetails userDetails = customerService
                 .loadUserByUsername(loginRequestDto.getEmail());

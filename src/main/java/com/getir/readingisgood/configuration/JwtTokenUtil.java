@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * @author UmutBayram
+ */
 @Component
 public class JwtTokenUtil implements Serializable {
 

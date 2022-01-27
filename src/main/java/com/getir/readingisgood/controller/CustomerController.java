@@ -6,6 +6,7 @@ import com.getir.readingisgood.dto.NewCustomerRequestDto;
 import com.getir.readingisgood.dto.NewCustomerResponseDto;
 import com.getir.readingisgood.service.CustomerService;
 import com.getir.readingisgood.service.OrderService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author UmutBayram
  */
+@Log4j2
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -33,11 +35,13 @@ public class CustomerController {
 
     @PostMapping("/newCustomer")
     public ResponseEntity newCustomer(@RequestBody @Validated NewCustomerRequestDto newCustomerRequestDto) {
+        log.info("newCustomer request.");
         return new ResponseEntity<NewCustomerResponseDto>(customerService.newCustomer(newCustomerRequestDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/orders")
     public ResponseEntity orders(@RequestBody @Validated CustomerOrdersRequestDto customerOrdersRequestDto) {
+        log.info("customer orders request.");
         return new ResponseEntity<CustomerOrdersResponseDto>(orderService.orders(customerOrdersRequestDto), HttpStatus.CREATED);
     }
 

@@ -33,7 +33,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
     @Transactional
     public NewCustomerResponseDto newCustomer(NewCustomerRequestDto newCustomerRequestDto) {
@@ -42,7 +41,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         customer = customerRepository.insert(customer);
         return CustomerMapper.INSTANCE.newCustomerResponseDtoToCustomer(customer);
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

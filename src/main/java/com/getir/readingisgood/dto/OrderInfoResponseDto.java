@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * @author UmutBayram
+ */
 @Getter
 @Setter
 public class OrderInfoResponseDto {

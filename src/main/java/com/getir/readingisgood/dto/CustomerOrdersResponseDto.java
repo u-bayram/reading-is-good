@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * @author UmutBayram
+ */
 @Getter
 @Setter
 public class CustomerOrdersResponseDto {

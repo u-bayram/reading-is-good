@@ -2,13 +2,26 @@ package com.getir.readingisgood.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-
+/**
+ * @author UmutBayram
+ */
 @Getter
 @Setter
 public class UpdateBookRequestDto {
+    @NotEmpty
     private String code;
+    @NotNull
+    @NumberFormat
+    @Min(value = 0)
     private BigDecimal price;
+    @NotNull
+    @NumberFormat
+    @Min(value = 0)
     private Long stock;
 }

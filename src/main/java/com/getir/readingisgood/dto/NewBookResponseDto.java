@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * @author UmutBayram
+ */
 @Getter
 @Setter
 public class NewBookResponseDto {
