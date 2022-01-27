@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
+/**
+ * @author UmutBayram
+ */
 @Getter
 @Setter
 @Document(collection = "book")

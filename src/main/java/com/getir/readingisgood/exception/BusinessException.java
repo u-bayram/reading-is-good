@@ -1,5 +1,8 @@
 package com.getir.readingisgood.exception;
 
+/**
+ * @author UmutBayram
+ */
 public class BusinessException extends RuntimeException {
     private String message;
     private String errorCode;

@@ -10,6 +10,7 @@ import com.getir.readingisgood.model.Order;
 import com.getir.readingisgood.model.OrderDetail;
 import com.getir.readingisgood.repository.BookRepository;
 import com.getir.readingisgood.repository.OrderRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 /**
  * @author UmutBayram
  */
+@Log4j2
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -49,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
                 .email(newOrderRequestDto
                         .getEmail()).orderDetails(orderDetails).build();
         order = orderRepository.insert(order);
+        log.info("order created. ");
         return OrderMapper.INSTANCE.orderInfoResponseDtoToOrder(order);
     }
 
@@ -88,6 +91,7 @@ public class OrderServiceImpl implements OrderService {
         orderFilterResponseDto.setPage(orderFilterRequestDto.getPage());
         orderFilterResponseDto.setSize(orderFilterRequestDto.getSize());
         orderFilterResponseDto.setOrders(OrderMapper.INSTANCE.orderInfoResponseDtosToOrders(orders.getContent()));
+        log.info("get customer order with filter result. ");
         return orderFilterResponseDto;
     }
 
@@ -106,7 +110,7 @@ public class OrderServiceImpl implements OrderService {
                 MonthlyStatisticsResponseDto.builder()
                         .reports(monthlyStatisticsDetailsResponseDtos.stream().sorted(Comparator.comparing(MonthlyStatisticsDetailsResponseDto::getMonthNumber))
                                 .collect(Collectors.toList())).build();
-
+        log.info("get customer monthly statistics result. ");
         return monthlyStatisticsResponseDto;
     }
 
@@ -148,6 +152,7 @@ public class OrderServiceImpl implements OrderService {
         customerOrdersResponseDto.setPage(customerOrdersRequestDto.getPage());
         customerOrdersResponseDto.setSize(customerOrdersRequestDto.getSize());
         customerOrdersResponseDto.setOrders(OrderMapper.INSTANCE.orderInfoResponseDtosToOrders(orders.getContent()));
+        log.info("get customer order result. ");
         return customerOrdersResponseDto;
     }
 }

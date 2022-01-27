@@ -5,8 +5,10 @@ import com.getir.readingisgood.dto.NewBookResponseDto;
 import com.getir.readingisgood.dto.UpdateBookRequestDto;
 import com.getir.readingisgood.dto.UpdateBookResponseDto;
 
+/**
+ * @author UmutBayram
+ */
 public interface BookService {
-
 
     NewBookResponseDto newBook(NewBookRequestDto newBookRequestDto);
 

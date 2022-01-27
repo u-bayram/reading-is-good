@@ -9,12 +9,17 @@ import com.getir.readingisgood.exception.NotFoundException;
 import com.getir.readingisgood.mapper.BookMapper;
 import com.getir.readingisgood.model.Book;
 import com.getir.readingisgood.repository.BookRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * @author UmutBayram
+ */
+@Log4j2
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -30,6 +35,7 @@ public class BookServiceImpl implements BookService {
     public NewBookResponseDto newBook(NewBookRequestDto newBookRequestDto) {
         Book book = BookMapper.INSTANCE.bookToNewBookRequestDto(newBookRequestDto);
         book = bookRepository.insert(book);
+        log.info("new book created. ");
         return BookMapper.INSTANCE.newBookResponseDtoToBook(book);
     }
 
@@ -41,6 +47,7 @@ public class BookServiceImpl implements BookService {
         book.setPrice(updateBookRequestDto.getPrice());
         book.setStock(updateBookRequestDto.getStock());
         book = bookRepository.save(book);
+        log.info("book updated. ");
         return BookMapper.INSTANCE.updateBookResponseDtoToBook(book);
     }
 }

@@ -7,6 +7,9 @@ import com.getir.readingisgood.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * @author UmutBayram
+ */
 @Mapper
 public interface BookMapper {
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);

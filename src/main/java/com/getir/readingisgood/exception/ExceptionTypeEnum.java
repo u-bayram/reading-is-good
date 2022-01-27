@@ -1,5 +1,8 @@
 package com.getir.readingisgood.exception;
 
+/**
+ * @author UmutBayram
+ */
 public enum ExceptionTypeEnum {
     BUSINESS_EXCEPTION("REDISBOOK_000"),
     NOT_FOUND_EXCEPTION("REDISBOOK_001"),

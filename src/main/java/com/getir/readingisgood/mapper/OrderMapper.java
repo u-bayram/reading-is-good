@@ -9,6 +9,9 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
+/**
+ * @author UmutBayram
+ */
 @Mapper
 public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
