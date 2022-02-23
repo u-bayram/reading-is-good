@@ -25,7 +25,7 @@ public class CustomerControllerIntegrationTest {
     @Test
     public void testNewCustomer() {
         ResponseEntity<String> responseEntity = this.restTemplate
-                .postForEntity("http://localhost:" + port + "/customer/newCustomer", NewCustomerRequestDto.builder()
+                .postForEntity("http://localhost:" + port + "/customer/", NewCustomerRequestDto.builder()
                         .email("test" + UUID.randomUUID() + "@test.com").name("name").surname("name").build(), String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }

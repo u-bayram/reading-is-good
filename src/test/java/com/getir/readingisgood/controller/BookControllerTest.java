@@ -39,16 +39,16 @@ class BookControllerTest {
     }
 
     @Test
-    void testNewBook() {
+    void testSave() {
         Mockito.when(bookService.newBook(any(NewBookRequestDto.class))).thenReturn(newBookResponseDto);
-        ResponseEntity<NewBookResponseDto> newBookResponseDto = bookController.newBook(newBookRequestDto);
+        ResponseEntity<NewBookResponseDto> newBookResponseDto = bookController.save(newBookRequestDto);
         Assertions.assertNotNull(newBookResponseDto);
     }
 
     @Test
-    void testUpdateBook() {
-        Mockito.when(bookService.updateBookStockAndPrice(any(UpdateBookRequestDto.class))).thenReturn(updateBookResponseDto);
-        ResponseEntity<UpdateBookResponseDto> updateBookResponseDtoResponseEntity = bookController.updateBook(updateBookRequestDto);
+    void testUpdate() {
+        Mockito.when(bookService.updateBookStockAndPrice(any(), any(UpdateBookRequestDto.class))).thenReturn(updateBookResponseDto);
+        ResponseEntity<UpdateBookResponseDto> updateBookResponseDtoResponseEntity = bookController.update(updateBookRequestDto, "TEST");
         Assertions.assertNotNull(updateBookResponseDtoResponseEntity);
     }
 

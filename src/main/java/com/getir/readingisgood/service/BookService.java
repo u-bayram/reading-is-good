@@ -12,5 +12,5 @@ public interface BookService {
 
     NewBookResponseDto newBook(NewBookRequestDto newBookRequestDto);
 
-    UpdateBookResponseDto updateBookStockAndPrice(UpdateBookRequestDto updateBookRequestDto);
+    UpdateBookResponseDto updateBookStockAndPrice(String code, UpdateBookRequestDto updateBookRequestDto);
 }

@@ -33,4 +33,9 @@ public class OrderFilterRequestDto {
     @NumberFormat
     @Min(value = 1)
     private Integer size;
+
+    @NotNull
+    private String sortField;
+    @NotNull
+    private String sortDir;
 }

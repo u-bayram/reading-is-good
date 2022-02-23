@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,7 +85,8 @@ public class OrderServiceImpl implements OrderService {
                 orderFilterRequestDto.getEmail(),
                 orderFilterRequestDto.getStartDate(),
                 orderFilterRequestDto.getFinishDate(),
-                PageRequest.of(orderFilterRequestDto.getPage(), orderFilterRequestDto.getSize()));
+                PageRequest.of(orderFilterRequestDto.getPage(), orderFilterRequestDto.getSize(),
+                        orderFilterRequestDto.getSortDir().equals("DESC") ? Sort.by(orderFilterRequestDto.getSortField()).descending() : Sort.by(orderFilterRequestDto.getSortField()).ascending()));
         OrderFilterResponseDto orderFilterResponseDto = new OrderFilterResponseDto();
         orderFilterResponseDto.setTotalElements(orders.getTotalElements());
         orderFilterResponseDto.setTotalPages(orders.getTotalPages());
@@ -145,7 +147,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CustomerOrdersResponseDto orders(CustomerOrdersRequestDto customerOrdersRequestDto) {
-        Page<Order> orders = orderRepository.findByEmail(customerOrdersRequestDto.getEmail(), PageRequest.of(customerOrdersRequestDto.getPage(), customerOrdersRequestDto.getSize()));
+        Page<Order> orders = orderRepository.findByEmail(customerOrdersRequestDto.getEmail(), PageRequest.of(customerOrdersRequestDto.getPage(), customerOrdersRequestDto.getSize(),
+                customerOrdersRequestDto.getSortDir().equals("DESC") ? Sort.by(customerOrdersRequestDto.getSortField()).descending() : Sort.by(customerOrdersRequestDto.getSortField()).ascending()));
         CustomerOrdersResponseDto customerOrdersResponseDto = new CustomerOrdersResponseDto();
         customerOrdersResponseDto.setTotalElements(orders.getTotalElements());
         customerOrdersResponseDto.setTotalPages(orders.getTotalPages());

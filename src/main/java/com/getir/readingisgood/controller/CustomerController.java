@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author UmutBayram
@@ -33,8 +30,8 @@ public class CustomerController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/newCustomer")
-    public ResponseEntity<NewCustomerResponseDto> newCustomer(@RequestBody @Validated NewCustomerRequestDto newCustomerRequestDto) {
+    @PostMapping("/")
+    public ResponseEntity<NewCustomerResponseDto> save(@RequestBody @Validated NewCustomerRequestDto newCustomerRequestDto) {
         log.info("newCustomer request.");
         return new ResponseEntity<NewCustomerResponseDto>(customerService.newCustomer(newCustomerRequestDto), HttpStatus.CREATED);
     }

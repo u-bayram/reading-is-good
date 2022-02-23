@@ -29,14 +29,14 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/newOrder")
-    public ResponseEntity<OrderInfoResponseDto> newOrder(@Valid @RequestBody NewOrderRequestDto newOrderRequestDto) {
+    @PostMapping("/")
+    public ResponseEntity<OrderInfoResponseDto> save(@Valid @RequestBody NewOrderRequestDto newOrderRequestDto) {
         log.info("newOrder request.");
         return new ResponseEntity<OrderInfoResponseDto>(orderService.newOrder(newOrderRequestDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderInfoResponseDto> orderInfo(@PathVariable String orderId) {
+    public ResponseEntity<OrderInfoResponseDto> info(@PathVariable String orderId) {
         log.info("orderInfo request.");
         return new ResponseEntity<OrderInfoResponseDto>(orderService.orderInfoById(orderId), HttpStatus.OK);
     }

@@ -72,6 +72,8 @@ class OrderServiceTest {
                 .finishDate(LocalDate.now())
                 .page(1)
                 .size(1)
+                .sortDir("ASC")
+                .sortField("date")
                 .build();
         orders = new ArrayList<Order>();
         orders.add(order);
@@ -80,6 +82,8 @@ class OrderServiceTest {
                 .email("test@test.com")
                 .page(1)
                 .size(1)
+                .sortDir("ASC")
+                .sortField("date")
                 .build();
 
         monthlyStatisticsRequestDto = MonthlyStatisticsRequestDto.builder()

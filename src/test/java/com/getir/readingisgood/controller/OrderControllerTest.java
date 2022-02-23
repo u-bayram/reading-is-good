@@ -40,16 +40,16 @@ class OrderControllerTest {
     }
 
     @Test
-    void testNewOrder() {
+    void testSave() {
         Mockito.when(orderService.newOrder(any(NewOrderRequestDto.class))).thenReturn(orderInfoResponseDto);
-        ResponseEntity<OrderInfoResponseDto> newCustomerResponseDtoResponseEntity = orderController.newOrder(newOrderRequestDto);
+        ResponseEntity<OrderInfoResponseDto> newCustomerResponseDtoResponseEntity = orderController.save(newOrderRequestDto);
         Assertions.assertNotNull(newCustomerResponseDtoResponseEntity);
     }
 
     @Test
-    void testOrderInfo() {
+    void testInfo() {
         Mockito.when(orderService.orderInfoById(anyString())).thenReturn(orderInfoResponseDto);
-        ResponseEntity<OrderInfoResponseDto> newCustomerResponseDtoResponseEntity = orderController.orderInfo("orderId");
+        ResponseEntity<OrderInfoResponseDto> newCustomerResponseDtoResponseEntity = orderController.info("orderId");
         Assertions.assertNotNull(newCustomerResponseDtoResponseEntity);
     }
 

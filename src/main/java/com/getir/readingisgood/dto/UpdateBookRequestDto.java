@@ -16,8 +16,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class UpdateBookRequestDto {
-    @NotEmpty
-    private String code;
     @NotNull
     @NumberFormat
     @Min(value = 0)

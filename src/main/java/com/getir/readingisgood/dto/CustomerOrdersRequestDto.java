@@ -25,5 +25,8 @@ public class CustomerOrdersRequestDto {
     @NumberFormat
     @NotNull
     private Integer size;
-
+    @NotNull
+    private String sortField;
+    @NotNull
+    private String sortDir;
 }

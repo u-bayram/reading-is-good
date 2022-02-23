@@ -44,7 +44,7 @@ class CustomerControllerTest {
     @Test
     void testNewCustomer() {
         Mockito.when(customerService.newCustomer(any(NewCustomerRequestDto.class))).thenReturn(newCustomerResponseDto);
-        ResponseEntity<NewCustomerResponseDto> newCustomerResponseDtoResponseEntity = customerController.newCustomer(newCustomerRequestDto);
+        ResponseEntity<NewCustomerResponseDto> newCustomerResponseDtoResponseEntity = customerController.save(newCustomerRequestDto);
         Assertions.assertNotNull(newCustomerResponseDtoResponseEntity);
     }
 

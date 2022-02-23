@@ -54,7 +54,6 @@ class BookServiceTest {
                 .build();
 
         updateBookRequestDto = UpdateBookRequestDto.builder()
-                .code("test")
                 .price(new BigDecimal(1))
                 .stock(10L)
                 .build();
@@ -73,7 +72,7 @@ class BookServiceTest {
     void testUpdateBookStockAndPrice() {
         when(bookRepository.save(any(Book.class))).thenReturn(book);
         when(bookRepository.findByCode(anyString())).thenReturn(Optional.ofNullable(book));
-        UpdateBookResponseDto updateBookResponseDto = bookService.updateBookStockAndPrice(updateBookRequestDto);
+        UpdateBookResponseDto updateBookResponseDto = bookService.updateBookStockAndPrice("test", updateBookRequestDto);
         assertNotNull(updateBookResponseDto);
         assertEquals(updateBookResponseDto.getCode(), book.getCode());
         assertEquals(updateBookResponseDto.getStock(), book.getStock());
