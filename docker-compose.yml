@@ -12,6 +12,9 @@ services:
       - "27017:27017"
     networks:
       - host
+    volumes:
+      - ./init-repl-set.sh:/docker-entrypoint-initdb.d/init-repl-set.sh
+    command: mongod --replSet replset
   app:
     image: 'readingisgood:latest'
     build:
@@ -31,3 +34,4 @@ services:
       - host
 networks:
   host:
+    driver: bridge
